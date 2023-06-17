@@ -1,6 +1,7 @@
-
 package view;
 
+import dao.FuncionarioDao;
+import javax.swing.JOptionPane;
 import model.Funcionario;
 
 /**
@@ -14,13 +15,12 @@ public class TelaFuncionarios extends javax.swing.JFrame {
      */
     public TelaFuncionarios() {
         initComponents();
-        
+
         btnSalvar.setEnabled(true);
         btnEditar.setEnabled(false);
         btnExluir.setEnabled(false);
         btnCancelar.setEnabled(false);
-        
-        
+
     }
 
     /**
@@ -50,12 +50,12 @@ public class TelaFuncionarios extends javax.swing.JFrame {
         setResizable(false);
 
         lblMatricula.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        lblMatricula.setText("Matricula:");
+        lblMatricula.setText("Matricula**:");
 
         txtMatricula.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
         lblNome.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        lblNome.setText("Nome:");
+        lblNome.setText("Nome**:");
 
         txtNome.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
@@ -102,8 +102,8 @@ public class TelaFuncionarios extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addComponent(lblMatricula)
+                        .addGap(5, 5, 5)
                         .addComponent(txtMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lblNome, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -112,7 +112,7 @@ public class TelaFuncionarios extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lblCargo, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(txtCargo, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtCargo, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lblSalario, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
@@ -152,18 +152,50 @@ public class TelaFuncionarios extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-      
-                
-       Funcionario funcionario = new Funcionario();
-       
-       funcionario.setMatricula(txtMatricula.getText());
-       funcionario.setNome(txtNome.getText());
-       funcionario.setCargo(txtCargo.getText());
-       funcionario.setSalario(Double.parseDouble(txtSalario.getText()));
-       
+
+        FuncionarioDao funcDao;
+        boolean status;
+
+        if(txtMatricula.getText().isEmpty() && txtNome.getText().isEmpty()){
+           JOptionPane.showMessageDialog(null, "Campos Obrigatório");
+        }
         
-       
         
+        Funcionario funcionario = new Funcionario();
+
+        funcionario.setMatricula(txtMatricula.getText());
+        funcionario.setNome(txtNome.getText());
+        funcionario.setCargo(txtCargo.getText());
+        funcionario.setSalario(Double.parseDouble(txtSalario.getText()));
+
+        funcDao = new FuncionarioDao();
+
+        status = funcDao.conectar();
+
+        if (status == false) {
+
+            JOptionPane.showMessageDialog(null, "Erro na conexão com o banco de dados. " + status);
+
+        } else {
+
+            status = funcDao.salvar(funcionario);
+            
+            //Linha de codigo para limpar os campos
+            txtMatricula.setText("");
+            txtNome.setText("");
+            txtSalario.setText("");
+
+            if (status == false) {
+                JOptionPane.showMessageDialog(null, "Erro ao cadastrar o funcionário.");
+            }else{
+                JOptionPane.showMessageDialog(null, "Funcionário Cadastrado.");
+                 
+            }
+
+           funcDao.desconectar();
+        }
+
+
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     /**

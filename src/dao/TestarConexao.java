@@ -19,7 +19,7 @@ public class TestarConexao {
             
         } catch (Exception e) {
             
-            System.out.println("Erro de conexão");
+            System.out.println("Erro de conexão " + e );
         }
     }
     
