@@ -10,6 +10,17 @@ import model.Funcionario;
  */
 public class TelaFuncionarios extends javax.swing.JFrame {
 
+    public void limparCampos() {
+
+        //Linha de codigo para limpar os campos
+        txtMatricula.setText("");
+        txtNome.setText("");
+        txtCargo.setText("");
+        txtSalario.setText("");
+        txtMatricula.requestFocus();
+
+    }
+
     /**
      * Creates new form TelaFuncionarios
      */
@@ -20,6 +31,7 @@ public class TelaFuncionarios extends javax.swing.JFrame {
         btnEditar.setEnabled(false);
         btnExluir.setEnabled(false);
         btnCancelar.setEnabled(false);
+        btnLimpar.setVisible(false);
 
     }
 
@@ -44,6 +56,8 @@ public class TelaFuncionarios extends javax.swing.JFrame {
         btnEditar = new javax.swing.JButton();
         btnExluir = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
+        btnConsultar = new javax.swing.JButton();
+        btnLimpar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Controle de Funcionarios");
@@ -82,9 +96,30 @@ public class TelaFuncionarios extends javax.swing.JFrame {
 
         btnExluir.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnExluir.setText("Excluir");
+        btnExluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExluirActionPerformed(evt);
+            }
+        });
 
         btnCancelar.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnCancelar.setText("Cancelar");
+
+        btnConsultar.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btnConsultar.setText("Consultar");
+        btnConsultar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConsultarActionPerformed(evt);
+            }
+        });
+
+        btnLimpar.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btnLimpar.setText("Limpar");
+        btnLimpar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimparActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -94,42 +129,54 @@ public class TelaFuncionarios extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnExluir, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblMatricula)
-                        .addGap(5, 5, 5)
-                        .addComponent(txtMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblNome, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblCargo, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtCargo, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblSalario, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtSalario, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnExluir, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblNome, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblCargo, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtCargo, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblSalario, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtSalario, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(btnLimpar, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblMatricula)
+                                .addGap(5, 5, 5)
+                                .addComponent(txtMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnConsultar, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(16, 16, 16))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(16, 16, 16)
+                .addGap(11, 11, 11)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblMatricula)
-                    .addComponent(txtMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnConsultar, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblNome)
-                    .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnLimpar, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblCargo)
@@ -144,10 +191,10 @@ public class TelaFuncionarios extends javax.swing.JFrame {
                     .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnExluir, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(91, Short.MAX_VALUE))
+                .addContainerGap(71, Short.MAX_VALUE))
         );
 
-        setSize(new java.awt.Dimension(546, 365));
+        setSize(new java.awt.Dimension(546, 360));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -156,11 +203,12 @@ public class TelaFuncionarios extends javax.swing.JFrame {
         FuncionarioDao funcDao;
         boolean status;
 
-        if(txtMatricula.getText().isEmpty() && txtNome.getText().isEmpty()){
-           JOptionPane.showMessageDialog(null, "Campos Obrigatório");
+        if (txtMatricula.getText().isEmpty() || txtNome.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Campos Obrigatório");
+
+            txtMatricula.requestFocus();
         }
-        
-        
+
         Funcionario funcionario = new Funcionario();
 
         funcionario.setMatricula(txtMatricula.getText());
@@ -179,24 +227,109 @@ public class TelaFuncionarios extends javax.swing.JFrame {
         } else {
 
             status = funcDao.salvar(funcionario);
-            
-            //Linha de codigo para limpar os campos
-            txtMatricula.setText("");
-            txtNome.setText("");
-            txtSalario.setText("");
+
+            limparCampos();
 
             if (status == false) {
                 JOptionPane.showMessageDialog(null, "Erro ao cadastrar o funcionário.");
-            }else{
+            } else {
                 JOptionPane.showMessageDialog(null, "Funcionário Cadastrado.");
-                 
+
             }
 
-           funcDao.desconectar();
+            funcDao.desconectar();
         }
 
 
     }//GEN-LAST:event_btnSalvarActionPerformed
+
+    private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
+
+        String matricula;
+
+        matricula = txtMatricula.getText();
+
+        FuncionarioDao funcDao = new FuncionarioDao();
+
+        boolean status = funcDao.conectar();
+
+        if (status == true) {
+            Funcionario funcionario = funcDao.consultar(matricula);
+
+            if (funcionario == null) {
+                JOptionPane.showMessageDialog(null, "Funcionário não localizado.");
+            } else {
+
+                txtNome.setText(funcionario.getNome());
+                txtCargo.setText(funcionario.getCargo());
+                txtSalario.setText(String.valueOf(funcionario.getSalario()));
+
+                btnSalvar.setEnabled(false);
+                btnEditar.setEnabled(true);
+                btnExluir.setEnabled(true);
+                btnCancelar.setEnabled(true);
+                btnLimpar.setVisible(true);
+
+            }
+
+            funcDao.desconectar();
+        } else {
+            JOptionPane.showMessageDialog(null, "Erro na conexão com o bando de dados");
+        }
+
+
+    }//GEN-LAST:event_btnConsultarActionPerformed
+
+    private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
+
+        limparCampos();
+        btnSalvar.setEnabled(true);
+        btnLimpar.setVisible(false);
+        btnExluir.setEnabled(false);
+        btnEditar.setEnabled(false);
+
+    }//GEN-LAST:event_btnLimparActionPerformed
+
+    private void btnExluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExluirActionPerformed
+       
+        String matricula;
+        
+        matricula = txtMatricula.getText();
+        
+        FuncionarioDao funcDao = new FuncionarioDao();
+        
+        boolean status = funcDao.conectar();
+        
+        if(status == false){
+            JOptionPane.showMessageDialog(null, "Erro na conexão com do banco de dados");
+        }else{
+            
+          
+            
+            if(status == true){
+               
+                int confirma = JOptionPane.showConfirmDialog(null, "Deseja excluír? ");
+                
+                if(confirma == 0){
+                    status = funcDao.excluir(matricula);
+                    
+                    JOptionPane.showMessageDialog(null, "Funcionário excluído.");
+                    
+                    limparCampos();
+                    
+                    btnLimpar.setVisible(false);
+                    btnExluir.setEnabled(false);
+                    btnEditar.setEnabled(false);
+                    btnSalvar.setEnabled(true);
+                    txtMatricula.requestFocus();
+                }else{
+                    JOptionPane.showMessageDialog(null, "Erro na conexão com o bando de dados");
+                }
+                
+            }
+        }
+        funcDao.desconectar();
+    }//GEN-LAST:event_btnExluirActionPerformed
 
     /**
      * @param args the command line arguments
@@ -235,8 +368,10 @@ public class TelaFuncionarios extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btnConsultar;
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnExluir;
+    private javax.swing.JButton btnLimpar;
     private javax.swing.JButton btnSalvar;
     private javax.swing.JLabel lblCargo;
     private javax.swing.JLabel lblMatricula;
