@@ -30,7 +30,7 @@ public class TelaFuncionarios extends javax.swing.JFrame {
         btnSalvar.setEnabled(true);
         btnEditar.setEnabled(false);
         btnExluir.setEnabled(false);
-        btnCancelar.setEnabled(false);
+        btnCancelar.setEnabled(true);
         btnLimpar.setVisible(false);
 
     }
@@ -109,6 +109,11 @@ public class TelaFuncionarios extends javax.swing.JFrame {
 
         btnCancelar.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
 
         btnConsultar.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnConsultar.setText("Consultar");
@@ -362,6 +367,17 @@ public class TelaFuncionarios extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_btnEditarActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+       
+        int confirmacaoDoEncerramento = JOptionPane.showConfirmDialog(null, "Deseja Sair? ","Confirmação",JOptionPane.YES_NO_OPTION);
+        
+        if(confirmacaoDoEncerramento == 0){
+            System.exit(0);
+        }
+        
+        
+    }//GEN-LAST:event_btnCancelarActionPerformed
 
     /**
      * @param args the command line arguments
