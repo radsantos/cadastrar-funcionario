@@ -1,12 +1,12 @@
 package dao;
 
-import com.mysql.cj.xdevapi.PreparableStatement;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Connection;
 import java.sql.Statement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import javax.swing.JOptionPane;
 
 import model.Funcionario;
 
@@ -109,6 +109,36 @@ public class FuncionarioDao {
 
             return false;
         }
+    }
+    
+    
+    public void editar(Funcionario funcionario){
+        
+        String sql = "UPDATE funcionario SET nome=?,cargo=?,salario=? WHERE matricula=?";
+        
+        try {
+            
+            st = conn.prepareStatement(sql);
+            
+            
+            st.setString(1, funcionario.getNome());
+            st.setString(2, funcionario.getCargo());
+            st.setDouble(3,funcionario.getSalario());
+            st.setString(4, funcionario.getMatricula());
+            
+            
+            
+            st.execute();
+            JOptionPane.showMessageDialog(null, "Funcionário atualizado");
+            
+            desconectar();
+            
+        } catch (SQLException e) {
+            
+            JOptionPane.showMessageDialog(null, "Erro ao atualizar funcionário " + e.getMessage());
+           
+        }
+        
     }
 
     public void desconectar() {

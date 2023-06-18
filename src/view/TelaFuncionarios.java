@@ -93,6 +93,11 @@ public class TelaFuncionarios extends javax.swing.JFrame {
 
         btnEditar.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnEditar.setText("Editar");
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
 
         btnExluir.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnExluir.setText("Excluir");
@@ -258,6 +263,13 @@ public class TelaFuncionarios extends javax.swing.JFrame {
 
             if (funcionario == null) {
                 JOptionPane.showMessageDialog(null, "Funcionário não localizado.");
+                limparCampos();
+                
+                btnLimpar.setVisible(false);
+                btnSalvar.setEnabled(true);
+                btnEditar.setEnabled(false);
+                btnExluir.setEnabled(false);
+                
             } else {
 
                 txtNome.setText(funcionario.getNome());
@@ -323,6 +335,8 @@ public class TelaFuncionarios extends javax.swing.JFrame {
                     btnSalvar.setEnabled(true);
                     txtMatricula.requestFocus();
                 }else{
+                    
+                    limparCampos();
                     JOptionPane.showMessageDialog(null, "Erro na conexão com o bando de dados");
                 }
                 
@@ -330,6 +344,24 @@ public class TelaFuncionarios extends javax.swing.JFrame {
         }
         funcDao.desconectar();
     }//GEN-LAST:event_btnExluirActionPerformed
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+       
+        Funcionario funcionario = new Funcionario();
+        
+        funcionario.setMatricula(txtMatricula.getText());
+        funcionario.setNome(txtNome.getText());
+        funcionario.setCargo(txtCargo.getText());
+        funcionario.setSalario(Double.parseDouble(txtSalario.getText()));
+        
+        FuncionarioDao funcDao = new FuncionarioDao();
+        funcDao.conectar();
+        
+        funcDao.editar(funcionario);
+        limparCampos();
+        
+        
+    }//GEN-LAST:event_btnEditarActionPerformed
 
     /**
      * @param args the command line arguments
